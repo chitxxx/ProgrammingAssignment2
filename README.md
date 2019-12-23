@@ -75,7 +75,7 @@ Solution:
 <!-- -->
     library(matlib)
 
-        makeCacheMatrix <- function(x = matrix()) {
+    makeCacheMatrix <- function(x = matrix()) {
             I <- NULL
             set <- function(y) {
                     x <<- y
@@ -103,3 +103,4 @@ Solution:
     #Test Case
     M1<-matrix(c(1,2,3,4),2,2)
     M2<-makeCacheMatrix(M1)
+    cacheSolve(M2)
