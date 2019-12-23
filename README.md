@@ -70,36 +70,39 @@ repeatedly (there are also alternatives to matrix inversion that we will
 not discuss here). Your assignment is to write a pair of functions that
 cache the inverse of a matrix.
 
-Write the following functions:
+Solution:
 
-1.  `makeCacheMatrix`: This function creates a special "matrix" object
-    that can cache its inverse.
-2.  `cacheSolve`: This function computes the inverse of the special
-    "matrix" returned by `makeCacheMatrix` above. If the inverse has
-    already been calculated (and the matrix has not changed), then
-    `cacheSolve` should retrieve the inverse from the cache.
+<!-- -->
+library(matlib)
 
-Computing the inverse of a square matrix can be done with the `solve`
-function in R. For example, if `X` is a square invertible matrix, then
-`solve(X)` returns its inverse.
+makeCacheMatrix <- function(x = matrix()) {
+        I <- NULL
+        set <- function(y) {
+                x <<- y
+                I <<- NULL
+        }
+        get <- function() x
+        setinverse <- function(inverse) I <<- inverse
+        getinverse <- function() I
+        list(set = set, get = get,
+             setinverse = setinverse,
+             getinverse = getinverse)
+}
 
-For this assignment, assume that the matrix supplied is always
-invertible.
 
-In order to complete this assignment, you must do the following:
+## Write a short comment describing this function
 
-1.  Fork the GitHub repository containing the stub R files at
-    [https://github.com/rdpeng/ProgrammingAssignment2](https://github.com/rdpeng/ProgrammingAssignment2)
-    to create a copy under your own account.
-2.  Clone your forked GitHub repository to your computer so that you can
-    edit the files locally on your own machine.
-3.  Edit the R file contained in the git repository and place your
-    solution in that file (please do not rename the file).
-4.  Commit your completed R file into YOUR git repository and push your
-    git branch to the GitHub repository under your account.
-5.  Submit to Coursera the URL to your GitHub repository that contains
-    the completed R code for the assignment.
-
-### Grading
-
-This assignment will be graded via peer assessment.
+cacheSolve <- function(x, ...) {
+        I <- x$getinverse()
+        if(!is.null(I)) {
+                message("getting cached data")
+                return(I)
+        }
+        data <- x$get()
+        i <- inv(data, ...)
+        x$setinverse(i)
+        i
+}
+#Test
+M1<-matrix(c(1,2,3,4),2,2)
+M2<-makeCacheMatrix(M1)
