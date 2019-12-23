@@ -73,36 +73,33 @@ cache the inverse of a matrix.
 Solution:
 
 <!-- -->
-library(matlib)
+    library(matlib)
 
-makeCacheMatrix <- function(x = matrix()) {
-        I <- NULL
-        set <- function(y) {
-                x <<- y
-                I <<- NULL
-        }
-        get <- function() x
-        setinverse <- function(inverse) I <<- inverse
-        getinverse <- function() I
-        list(set = set, get = get,
-             setinverse = setinverse,
-             getinverse = getinverse)
-}
+        makeCacheMatrix <- function(x = matrix()) {
+            I <- NULL
+            set <- function(y) {
+                    x <<- y
+                    I <<- NULL
+            }
+            get <- function() x
+            setinverse <- function(inverse) I <<- inverse
+            getinverse <- function() I
+            list(set = set, get = get,
+                 setinverse = setinverse,
+                 getinverse = getinverse)
+    }
 
-
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        I <- x$getinverse()
-        if(!is.null(I)) {
-                message("getting cached data")
-                return(I)
-        }
-        data <- x$get()
-        i <- inv(data, ...)
-        x$setinverse(i)
-        i
-}
-#Test
-M1<-matrix(c(1,2,3,4),2,2)
-M2<-makeCacheMatrix(M1)
+    cacheSolve <- function(x, ...) {
+            I <- x$getinverse()
+            if(!is.null(I)) {
+                    message("getting cached data")
+                    return(I)
+            }
+            data <- x$get()
+            i <- inv(data, ...)
+            x$setinverse(i)
+            i
+    }
+    #Test Case
+    M1<-matrix(c(1,2,3,4),2,2)
+    M2<-makeCacheMatrix(M1)
